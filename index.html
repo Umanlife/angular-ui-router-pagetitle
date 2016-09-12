@@ -1,0 +1,32 @@
+<!doctype html>
+<html ng-app="componentA">
+    <head>
+        <title>{{pageTitle}}</title>
+        <base href="/page-title/">
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Vendors CSS
+        -->
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Components CSS
+        -->
+    </head>
+    <body>
+        <div ui-view="body"></div>
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Vendors JS
+        -->
+        <script src="vendors/angular/angular.js"></script>
+        <script src="vendors/angular-ui-router/release/angular-ui-router.js"></script>
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Components JS
+        -->
+        <script src="components/page-title/page-title.js"></script>
+        <script src="components/component-a/component-a.js"></script>
+        <script src="components/component-a/component-b/component-b.js"></script>
+        <script src="components/component-a/component-b/component-c/component-c.js"></script>
+    </body>
+</html>
