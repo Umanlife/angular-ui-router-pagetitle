@@ -14,7 +14,7 @@
     "homepage" : "https://gitlab.id-apps.info/interne-idapps-angular/page-title",
     "private" : true,
     "dependencies" : {
-        "angular" : "^1.5.7",
+        "angular" : ">=1.4.8",
         "angular-ui-router" : "ui-router#^0.3.1"
     }
 }
