@@ -38,15 +38,26 @@
                     }
                 }
                 else if (by == 'resolve' && pageTitle.byResolve()) {
-                    var byResolve = '$current' in $state &&
-                                    'resolve' in $state.$current &&
-                                    'pageTitle' in $state.$current.resolve &&
-                                    'locals' in $state.$current &&
-                                    'globals' in $state.$current.locals &&
-                                    'pageTitle' in $state.$current.locals.globals &&
-                                    $state.$current.locals.globals.hasOwnProperty('pageTitle');
-                    if (byResolve) {
-                        $rootScope.pageTitle = $state.$current.locals.globals.pageTitle;
+                    var byResolveWoPrefix = '$current' in $state &&
+                                            'resolve' in $state.$current &&
+                                            'pageTitle' in $state.$current.resolve &&
+                                            'locals' in $state.$current &&
+                                            'globals' in $state.$current.locals &&
+                                            'pageTitle' in $state.$current.locals.globals &&
+                                            $state.$current.locals.globals.hasOwnProperty('pageTitle');
+                    var byResolveWPrefix  = '$current' in $state &&
+                                            'resolve' in $state.$current &&
+                                            'resolvedPageTitle' in $state.$current.resolve &&
+                                            'locals' in $state.$current &&
+                                            'globals' in $state.$current.locals &&
+                                            'resolvedPageTitle' in $state.$current.locals.globals &&
+                                            $state.$current.locals.globals.hasOwnProperty('resolvedPageTitle');
+                    if (byResolveWoPrefix || byResolveWPrefix) {
+                        if (byResolveWoPrefix) {
+                            $rootScope.pageTitle = $state.$current.locals.globals.pageTitle;
+                        } else if (byResolveWPrefix) {
+                            $rootScope.pageTitle = $state.$current.locals.globals.resolvedPageTitle;
+                        }
                         return;
                     }
                 }
