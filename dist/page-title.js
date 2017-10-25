@@ -1,6 +1,6 @@
 (function () {
 
-    var moduleName = 'idappsPageTitle';
+    var moduleName = 'ui.router.pageTitle';
     var moduleDeps = [
         'ui.router'
     ];

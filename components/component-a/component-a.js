@@ -2,7 +2,7 @@
 
     var moduleName = 'componentA';
     var moduleDeps = [
-        'idappsPageTitle',
+        'ui.router.pageTitle',
         'componentB'
     ];
 

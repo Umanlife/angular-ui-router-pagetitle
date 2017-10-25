@@ -1,0 +1,24 @@
+{
+  "name": "angular-ui-router-pagetitle",
+  "version": "1.0.0",
+  "description": "Add page title switch capabilities for each ui route",
+  "main": "dist/page-title.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Umanlife/angular-ui-router-pagetitle.git"
+  },
+  "keywords": [
+    "Angular",
+    "ui",
+    "router",
+    "uirouter",
+    "page",
+    "title"
+  ],
+  "author": "Yann LOJEWSKI <yann.lojewski@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Umanlife/angular-ui-router-pagetitle/issues"
+  },
+  "homepage": "https://github.com/Umanlife/angular-ui-router-pagetitle#readme"
+}
