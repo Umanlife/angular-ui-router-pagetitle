@@ -8,10 +8,13 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Modules
 
-    var module = angular.module(moduleName, moduleDeps);
+    angular.module(moduleName, moduleDeps)
+        .run(pageTitleRun)
+        .provider('pageTitle', pageTitleProvider);
 
-    module.run(pageTitleRun);
-    module.provider('pageTitle', pageTitleProvider);
+    if (typeof module === 'object' && module) {
+        module.exports = moduleName;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Run : pageTitle
