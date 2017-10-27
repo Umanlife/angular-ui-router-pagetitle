@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-router-pagetitle",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Add page title switch capabilities for each ui route",
   "main": "dist/page-title.js",
   "repository": {

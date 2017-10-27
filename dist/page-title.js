@@ -33,40 +33,44 @@
                 var by = sequence[i];
                 if (by == 'data' && pageTitle.byData()) {
                     var byData = 'data' in toState &&
-                                 'pageTitle' in toState.data &&
-                                 toState.data.hasOwnProperty('pageTitle');
+                        'pageTitle' in toState.data &&
+                        toState.data.hasOwnProperty('pageTitle');
                     if (byData) {
                         $rootScope.pageTitle = toState.data.pageTitle;
                         return;
                     }
                 }
                 else if (by == 'resolve' && pageTitle.byResolve()) {
-                    var byResolveWoPrefix = '$current' in $state &&
-                                            'resolve' in $state.$current &&
-                                            'pageTitle' in $state.$current.resolve &&
-                                            'locals' in $state.$current &&
-                                            'globals' in $state.$current.locals &&
-                                            'pageTitle' in $state.$current.locals.globals &&
-                                            $state.$current.locals.globals.hasOwnProperty('pageTitle');
-                    var byResolveWPrefix  = '$current' in $state &&
-                                            'resolve' in $state.$current &&
-                                            'resolvedPageTitle' in $state.$current.resolve &&
-                                            'locals' in $state.$current &&
-                                            'globals' in $state.$current.locals &&
-                                            'resolvedPageTitle' in $state.$current.locals.globals &&
-                                            $state.$current.locals.globals.hasOwnProperty('resolvedPageTitle');
-                    if (byResolveWoPrefix || byResolveWPrefix) {
-                        if (byResolveWoPrefix) {
-                            $rootScope.pageTitle = $state.$current.locals.globals.pageTitle;
-                        } else if (byResolveWPrefix) {
-                            $rootScope.pageTitle = $state.$current.locals.globals.resolvedPageTitle;
+                    function resolveState(state) {
+                        var byResolveWoPrefix = 'resolve' in state &&
+                            'pageTitle' in state.resolve &&
+                            'locals' in state &&
+                            'globals' in state.locals &&
+                            'pageTitle' in state.locals.globals &&
+                            state.locals.globals.hasOwnProperty('pageTitle');
+                        var byResolveWPrefix  = 'resolve' in state &&
+                            'resolvedPageTitle' in state.resolve &&
+                            'locals' in state &&
+                            'globals' in state.locals &&
+                            'resolvedPageTitle' in state.locals.globals &&
+                            state.locals.globals.hasOwnProperty('resolvedPageTitle');
+                        if (byResolveWoPrefix || byResolveWPrefix) {
+                            if (byResolveWoPrefix) {
+                                $rootScope.pageTitle = state.locals.globals.pageTitle;
+                            } else if (byResolveWPrefix) {
+                                $rootScope.pageTitle = state.locals.globals.resolvedPageTitle;
+                            }
+                        } else if (pageTitle.resolveAncestors() && 'parent' in state) {
+                            resolveState(state.parent);
                         }
-                        return;
+                    }
+                    if ('$current' in $state) {
+                        resolveState($state.$current);
                     }
                 }
                 else if (by == 'params' && pageTitle.byParams()) {
                     var byParams = 'pageTitle' in toParams &&
-                                   toParams.hasOwnProperty('pageTitle');
+                        toParams.hasOwnProperty('pageTitle');
                     if (byParams) {
                         $rootScope.pageTitle = toParams.pageTitle;
                         return;
@@ -88,15 +92,17 @@
                 'resolve',
                 'params'
             ];
+            var ancestors_ = false;
             var byData_    = true;
             var byResolve_ = true;
             var byParams_  = true;
 
-            this.$get      = $get;
-            this.sequence  = sequence;
-            this.byData    = byData;
-            this.byResolve = byResolve;
-            this.byParams  = byParams;
+            this.$get             = $get;
+            this.sequence         = sequence;
+            this.resolveAncestors = resolveAncestors;
+            this.byData           = byData;
+            this.byResolve        = byResolve;
+            this.byParams         = byParams;
 
             function $get() {
                 return this;
@@ -122,6 +128,19 @@
                 } else {
                     return sequence_;
                 }
+            }
+
+            /**
+             * Whether retain page title from the ancestors resolutions
+             * @param {boolean} ancestorsResolved
+             */
+            function resolveAncestors(ancestorsResolved) {
+                if (arguments.length >= 1) {
+                    ancestors_ = !!ancestorsResolved;
+                } else {
+                    return ancestors_;
+                }
+
             }
 
             function byData(detectData) {
